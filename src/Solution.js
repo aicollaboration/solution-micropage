@@ -10,13 +10,6 @@ export default function Solution({ session }) {
     getSolution()
   }, [session])
 
-
-  // public async getSolution(solutionId: string) {
-  //   const { data, error } = await this.supabase.from<SolutionModel>('solution').select("*").eq('id', solutionId)
-
-  //   return data[0];
-  // }
-
   async function getSolution() {
     const solutionId = 54;
     try {
@@ -35,7 +28,7 @@ export default function Solution({ session }) {
 
       if (data) {
         console.log(data, "data", user);
-        // setData(data);
+        setData(data);
       }
     } catch (error) {
       alert(error.message)
@@ -45,18 +38,17 @@ export default function Solution({ session }) {
   }
 
 
+
   return (
     <div className="form-widget">
-      Testing
 
       <br />
-      solution.name
+      Name: {data.name}
 
       <br />
-      solution.description
+      Desc :   {data.description}
 
-      <br />
-      <br />
+
       <br />
       <br />
     </div>
