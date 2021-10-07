@@ -1,12 +1,29 @@
-.App {
-  text-align: center;
-}
 
+.form-widget{
+text-align: center;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+.inputField{
+  width: 300px;
+    height: 25px;
+    padding: 5px;
+    margin: 10px;
+}
 
+.form-padding{
+  padding-bottom: 15px;
+}
+.button{
+  width: 150px;
+  height: 30px;
+  color: #fff;
+  font-weight: 600;
+  background: #4068fb;
+  border: 0px;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
