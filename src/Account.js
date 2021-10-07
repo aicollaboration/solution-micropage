@@ -5,73 +5,71 @@ import { supabase } from './supabaseClient'
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
 
-  useEffect(() => {
-    getProfile()
-  }, [session])
+  // useEffect(() => {
+  //   getProfile()
+  // }, [session])
 
-  async function getProfile() {
-    try {
-      setLoading(true)
-      const user = supabase.auth.user()
+  // async function getProfile() {
+  //   try {
+  //     setLoading(true)
+  //     const user = supabase.auth.user()
 
-      let { data, error, status } = await supabase
-        .from('solution')
-        .select(`*`)
-        .eq('id', 55)
-        .single()
+  //     let { data, error, status } = await supabase
+  //       .from('solution')
+  //       .select(`*`)
+  //       .eq('id', 55)
+  //       .single()
 
-      if (error && status !== 406) {
-        throw error
-      }
+  //     if (error && status !== 406) {
+  //       throw error
+  //     }
 
-      if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  //     if (data) {
+  //       setUsername(data.username)
+  //       setWebsite(data.website)
+  //       setAvatarUrl(data.avatar_url)
+  //     }
+  //   } catch (error) {
+  //     alert(error.message)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
-  async function updateProfile({ username, website, avatar_url }) {
-    try {
-      setLoading(true)
-      const user = supabase.auth.user()
+  // async function updateProfile({ username, website, avatar_url }) {
+  //   try {
+  //     setLoading(true)
+  //     const user = supabase.auth.user()
 
-      const updates = {
-        id: user.id,
-        username,
-        // website,
-        // avatar_url,
-        // updated_at: new Date(),
-      }
+  //     const updates = {
+  //       id: user.id,
+  //       username,
+  //       // website,
+  //       // avatar_url,
+  //       // updated_at: new Date(),
+  //     }
 
-      let { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      })
+  //     let { error } = await supabase.from('profiles').upsert(updates, {
+  //       returning: 'minimal', // Don't return the value after inserting
+  //     })
 
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  //     if (error) {
+  //       throw error
+  //     }
+  //   } catch (error) {
+  //     alert(error.message)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   return (
     <div className="form-widget">
 
-      <Solution />
+      <Solution session={session}/>
 
-      <div className="form-padding">
+      {/* <div className="form-padding">
         <label htmlFor="email">Email</label>
         <input id="email" type="text" value={session.user.email} disabled />
       </div>
@@ -102,7 +100,7 @@ export default function Account({ session }) {
         >
           {loading ? 'Loading ...' : 'Update'}
         </button>
-      </div>
+      </div> */}
 
       <div className="form-padding">
         <button className="button block" onClick={() => supabase.auth.signOut()}>

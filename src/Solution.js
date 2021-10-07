@@ -4,7 +4,7 @@ import { supabase } from './supabaseClient'
 export default function Solution({ session }) {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([]);
-  
+
 
   useEffect(() => {
     getSolution()
@@ -18,7 +18,7 @@ export default function Solution({ session }) {
   // }
 
   async function getSolution() {
-    const solutionId=54;
+    const solutionId = 54;
     try {
       setLoading(true)
       const user = supabase.auth.user()
@@ -34,8 +34,8 @@ export default function Solution({ session }) {
       }
 
       if (data) {
-      console.log(data,"data",user);
-      // setData(data);
+        console.log(data, "data", user);
+        // setData(data);
       }
     } catch (error) {
       alert(error.message)
@@ -47,7 +47,18 @@ export default function Solution({ session }) {
 
   return (
     <div className="form-widget">
-     vimal kovath
+      Testing
+
+      <br />
+      solution.name
+
+      <br />
+      solution.description
+
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   )
 }
