@@ -1,0 +1,19 @@
+input{
+    border: solid 1px #9f9f9f;
+    height: 45px;
+    padding-left: 10px;
+    margin: 0px 5px 5px 0;
+}
+
+
+.w-350.customername{
+    width:600px;
+}
+.w-350.customeralternativename{
+    width:400px;
+}
+.inputFieldOrgDetail{
+    display:inline-block
+}
+.inputFieldOrgDetailLabel{
+color: #a2a4a6;}

@@ -2,6 +2,12 @@
 .form-widget{
 text-align: center;
 }
+.card{
+  width: 600px;
+  padding: 15px;
+  margin: 15px;
+  border: 1px solid #ccc;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

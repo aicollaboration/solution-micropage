@@ -14,7 +14,6 @@ export default function Solution({ session }) {
     const solutionId = 54;
     try {
       setLoading(true)
-      const user = supabase.auth.user()
 
       let { data, error, status } = await supabase
         .from('solution')
@@ -27,7 +26,7 @@ export default function Solution({ session }) {
       }
 
       if (data) {
-        console.log(data, "data", user);
+        // console.log(data, "data");
         setData(data);
       }
     } catch (error) {
@@ -40,17 +39,18 @@ export default function Solution({ session }) {
 
 
   return (
+    
     <div className="form-widget">
 
       <br />
       Name: {data.name}
-
       <br />
       Desc :   {data.description}
-
-
       <br />
+
+
       <br />
     </div>
+    
   )
 }

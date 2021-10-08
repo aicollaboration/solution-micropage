@@ -1,0 +1,37 @@
+.BasicDropDown{
+  margin-right: 20px;
+}
+.SelectDropDown{
+    height: 44px;
+    border: solid 1px #cfcfcf;
+    padding-left: 5px;
+    min-width: 80px;
+    width: inherit;
+}
+
+.input-group-text{
+    border-radius: 0;
+    height: 44px;
+}
+
+.input-group select.SelectDropDown{
+    width:auto;
+}
+
+.input-group select.SelectDropDown.w-200 {
+    width: 200px;
+}
+
+.btn-custom:focus {
+    outline: 0;
+    box-shadow: none;
+}
+.dropdown-menu {
+    border-radius: 0;
+}
+
+.common-select-space{
+    margin: 0px 5px 5px 0;
+}
+.common-border{
+border: solid 1px #9f9f9f;}
