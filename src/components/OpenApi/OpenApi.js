@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import ReactJson from 'react-json-view'
 
 import InputField from '../../atoms/InputField/InputField';
-import { getElementError } from '@testing-library/dom';
 
 
 export default function OpenApi({ session, selectedData }) {
@@ -56,8 +55,6 @@ export default function OpenApi({ session, selectedData }) {
         responseApi = selectedData.components.schemas.Input.properties;
     }
 
-    console.log(responseApi, "responseApi");
-
 
     const handleInputchange = (value, name) => {
         console.log(data, "data", value, name);
@@ -79,7 +76,6 @@ export default function OpenApi({ session, selectedData }) {
             responseApi = await dig(api, 'Output');
         }
 
-        console.log(values, 'api response');
 
         const _inputs = { ...values };
 
@@ -111,7 +107,7 @@ export default function OpenApi({ session, selectedData }) {
             setLoading(false);
         }
         catch (err) {
-            console.log(getElementError)
+            console.log(err)
             setLoading(false);
         }
 
@@ -152,7 +148,7 @@ export default function OpenApi({ session, selectedData }) {
                 className="button block" onClick={ask}
             >Run</Button>}
 
-            {!_.isEmpty(answer)  &&
+            {!_.isEmpty(answer) &&
                 <ReactJson src={answer} />}
 
         </div>

@@ -1,9 +1,15 @@
 
 import { useState, useEffect } from 'react'
-// import SelectDropDown from './atoms/DropDown/SelectDropDown';
-// import InputField from './atoms/InputField/InputField';
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+
 import OpenApi from './components/OpenApi/OpenApi';
+import SolutionBox from './components/SolutionBox/SolutionBox';
 import { supabase } from './supabaseClient'
+
+
 
 export default function Solutions({ session }) {
     const [loading, setLoading] = useState(true)
@@ -51,44 +57,19 @@ export default function Solutions({ session }) {
         }
     }
 
-    // const testDropdown = [
-    //     { label: "red", value: "red" },
-    //     { label: "blue", value: "blue" },
-    //     { label: "green", value: "green" }];
+    const handleClick = (_item) => {
+        setSelectedData(_item)
+    }
 
     return (
-
-        <div className="form-widget">
-
-            {/* {JSON.stringify(data)} */}
-
-
-            {apiData && apiData.map((item, index) => (
-                < div className="card" key={index} onClick={e => setSelectedData(item.service ? JSON.parse(item.service.api) : {})}>
-                    <div> #:{item.id} </div>
-                    <div> Service Name:{item.service ? item.service.name : ""} </div>
-                    <br />
-                    {/* <div> Service Name:{item.service ? item.service.api : ""} </div> */}
-                    <br />
-                    {/* <SelectDropDown
-                        handleInputchange={handleInputchange}
-                        name="report_type"
-                        data={testDropdown}
-                        label={"color"}
-                    /> */}
-
-
-                    <div> Solution Name:{item.solution ? item.solution.name : ""} </div>
-
-                </div>
-            ))}
-
-
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                {apiData && apiData.map((item, index) => (
+                        <Grid item xs={6} key={index} onClick={e => handleClick(item.service ? JSON.parse(item.service.api) : {})}>
+                                <SolutionBox item={item} />
+                        </Grid>
+                ))}
             <OpenApi session={session} selectedData={selectedData} />
-
-
-        </div>
-
+            </Grid>
     )
 }
 
