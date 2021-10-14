@@ -6,6 +6,7 @@ import { supabase } from './supabaseClient'
 import Auth from './Auth'
 import Account from './Account'
 import Home from './container/Home/Home'
+import SolutionDetail from './container/SolutionDetail/SolutionDetail'
 import Dashboard from './container/Home/Dashboard'
 import Header from './components/Header/Header';
 import Page404 from './container/Other/Page404';
@@ -65,7 +66,11 @@ export default function App() {
           <Switch>
             <ProtectedRoute as={Dashboard} session={session} role={1} path="/dashboard" />
             <ProtectedRoute as={Home} session={session} role={1} path="/home" />
-
+            <ProtectedRoute as={SolutionDetail} session={session} role={1} path={`/SolutionDetail/:id`} />
+            {/* <ProtectedRoute as={SolutionDetail} session={session} role={1} path={`${match.path}/:topicId`} /> */}
+            {/* <Route path={`${match.path}/:topicId`}>
+          <Topic />
+        </Route> */}
             {/* 
             <ProtectedRoute user={user} as={MemberLibraries} role={1} path="/memberLibraries" />
             <ProtectedRoute as={ResourceMgmt} role={1} path="/ResourceMgmt" /> 
