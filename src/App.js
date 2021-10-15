@@ -2,12 +2,13 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Switch } from 'react-router-dom';
 
-import { supabase } from './supabaseClient'
-import Auth from './Auth'
-import Account from './Account'
-import Home from './container/Home/Home'
-import SolutionDetail from './container/SolutionDetail/SolutionDetail'
-import Dashboard from './container/Home/Dashboard'
+import { supabase } from './supabaseClient';
+import Auth from './container/Login/Auth';
+import Account from './container/Profile/Account';
+import Home from './container/Home/Home';
+import SolutionDetail from './container/SolutionDetail/SolutionDetail';
+import Dashboard from './container/Home/Dashboard';
+import Solutions from './container/Solutions/Solutions';
 import Header from './components/Header/Header';
 import Page404 from './container/Other/Page404';
 import { ProtectedRoute } from './util/ProtectedRoute';
@@ -30,62 +31,39 @@ export default function App() {
     })
   }, [])
 
-  const signIn = async (email, password) => {
-    try {
-      setLoading(true);
-      const { user, error, session } = await supabase.auth.signIn({ email, password });
-      setSession(session);
-      setLocalStorage("user", user);
-      if (error) throw error;
-    } catch (error) {
-      alert(error.error_description || error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
 
-
-  if (!session) {
   return (
-    <div >
-      {!session ? <Auth signIn={signIn} /> : <Account key={session.user.id} session={session} />}
+    <div className="App">
+
+      {session === null && <Auth setSession={setSession} setLoading={setLoading}/>}
+      {session !== null &&
+        <BrowserRouter>
+
+          {!loading && <Header session={session} />}
+
+          <CssBaseline />
+          <Container fixed>
+
+            <main>
+              <Switch>
+                {/* <ProtectedRoute as={Home} session={session} role={1} path="/home" /> */}
+                <ProtectedRoute as={SolutionDetail} role={1} path={`/SolutionDetail/:id`} />
+                <ProtectedRoute as={Solutions} role={1} path="/Solutions" />
+
+                <ProtectedRoute as={Dashboard} role={1} path="/dashboard" />
+                <ProtectedRoute as={Home} role={1} path="/home" />
+
+                <ProtectedRoute as={Auth} role={1} path="/login" />
+                <ProtectedRoute as={Account} role={1} path="/" />
+                <ProtectedRoute as={Page404} role={1} path="/**" />
+              </Switch>
+            </main>
+
+          </Container>
+        </BrowserRouter>
+      }
+
     </div>
   )
 }
 
-
-  return (
-    <div className="App">
-     
-    { !loading &&   <Header session={session}/>}
-    <BrowserRouter>
-    <CssBaseline />
-      <Container fixed>
-
-      <main>
-          <Switch>
-            <ProtectedRoute as={Dashboard} session={session} role={1} path="/dashboard" />
-            <ProtectedRoute as={Home} session={session} role={1} path="/home" />
-            <ProtectedRoute as={SolutionDetail} session={session} role={1} path={`/SolutionDetail/:id`} />
-            {/* <ProtectedRoute as={SolutionDetail} session={session} role={1} path={`${match.path}/:topicId`} /> */}
-            {/* <Route path={`${match.path}/:topicId`}>
-          <Topic />
-        </Route> */}
-            {/* 
-            <ProtectedRoute user={user} as={MemberLibraries} role={1} path="/memberLibraries" />
-            <ProtectedRoute as={ResourceMgmt} role={1} path="/ResourceMgmt" /> 
-            */}
-            
-            <ProtectedRoute as={Account} session={session} role={1} path="/" />
-            <ProtectedRoute as={Page404} role={1} path="/**" />
-          </Switch>
-      </main>
-      </Container>
-    
-    </BrowserRouter>
-
-    
-
-  </div>
-  )
-}

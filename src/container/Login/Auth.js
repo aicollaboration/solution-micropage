@@ -1,27 +1,36 @@
 import { useState } from 'react'
-import { supabase } from './supabaseClient'
+import { supabase } from '../../supabaseClient'
+import { setLocalStorage } from "../../util/storage";
 
-export default function Auth({signIn}) {
-  const [loading, setLoading] = useState(false)
+
+export default function Auth({ setSession,setLoading }) {
+  const [loadinghere, setLoadinghere] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = (email,password) => {
-    // try {
-    //   setLoading(true)
-    //   const { error } = await supabase.auth.signIn({ email })
-    //   if (error) throw error
-    //   alert('Check your email for the login link!')
-    // } catch (error) {
-    //   alert(error.error_description || error.message)
-    // } finally {
-    //   setLoading(false)
-    // }
+  const handleLogin = async (email, password) => {
+    try {
+      setLoading(true);
+      setLoadinghere(true);
+      const { user, error, session } = await supabase.auth.signIn({ email, password });
+      // setLocalStorage(user, user);
+      // setSession(session);
+      // if (user) {
+      //   signIn(session, user)
+      // }
+
+      if (error) throw error;
+    } catch (error) {
+      alert(error.error_description || error.message)
+    } finally {
+      setLoading(false)
+    setLoadinghere(false);
+
+    }
     console.log("test");
-    signIn(email,password)
   }
 
-  
+
 
   return (
     <div className="row flex flex-center">
@@ -50,12 +59,12 @@ export default function Auth({signIn}) {
           <button
             onClick={(e) => {
               e.preventDefault()
-              handleLogin(email,password)
+              handleLogin(email, password)
             }}
             className={'button block'}
-            disabled={loading}
+            disabled={loadinghere}
           >
-            {loading ? <span>Checking</span> : <span>Login</span>}
+            {loadinghere ? <span>Checking</span> : <span>Login</span>}
           </button>
         </div>
       </div>

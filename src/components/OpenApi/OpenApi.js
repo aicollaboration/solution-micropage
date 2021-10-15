@@ -4,8 +4,11 @@ import SelectDropDown from '../../atoms/DropDown/SelectDropDown';
 import { dig } from '../../util/utils';
 import Button from '@mui/material/Button';
 import ReactJson from 'react-json-view'
+import Grid from '@mui/material/Grid';
+
 
 import InputField from '../../atoms/InputField/InputField';
+import Loading from '../../atoms/Loading/Loading';
 
 
 export default function OpenApi({ session, selectedData }) {
@@ -36,8 +39,6 @@ export default function OpenApi({ session, selectedData }) {
 
 
     const _requestBodyObj = dig(selectedData, 'requestBody');
-    // const _responseBodyObj = await dig( _api, 'responses') ;
-
 
     const inputProperties = dig(_requestBodyObj, '$ref');
     let refInput = "";
@@ -126,27 +127,40 @@ export default function OpenApi({ session, selectedData }) {
                         name={item}
                         value={data[item] || ""}
                         handleInputchange={handleInputchange}
-                        classname={`w-350 ${item}`}
+                        classname={`w-100-p ${item}`}
                     />
                 </div>
             ))}
 
-            <SelectDropDown
-                handleInputchange={handleInputchange}
-                name="server"
-                data={serverDropDown}
-                label={"Server"}
-            />
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
 
-            <SelectDropDown
-                handleInputchange={handleInputchange}
-                name="path"
-                data={pathDropDown}
-                label={"Path"}
-            />
-            {!loading && <Button variant="contained"
-                className="button block" onClick={ask}
-            >Run</Button>}
+                    <SelectDropDown
+                        handleInputchange={handleInputchange}
+                        name="server"
+                        data={serverDropDown}
+                        label={"Server"}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <SelectDropDown
+                        handleInputchange={handleInputchange}
+                        name="path"
+                        data={pathDropDown}
+                        label={"Path"}
+                    />
+                </Grid>
+
+            </Grid>
+
+
+            <div className="form-common-padding">
+                {!loading && <Button variant="contained"
+                    className="button block" onClick={ask}
+                >Run</Button>}
+                {loading && <Loading />}
+            </div>
+
 
             {!_.isEmpty(answer) &&
                 <ReactJson src={answer} />}

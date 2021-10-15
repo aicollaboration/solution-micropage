@@ -19,9 +19,13 @@ text-align: center;
 .form-padding{
   padding-bottom: 15px;
 }
+
+.form-common-padding{
+  padding: 5px 8px;
+}
 .button{
   width: 150px;
-  height: 30px;
+  height: 45px;
   color: #fff;
   font-weight: 600;
   background: #4068fb;

@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
+import Loading from '../../atoms/Loading/Loading';
+import { supabase } from '../../supabaseClient';
 
-export default function Solution({ session }) {
+export default function Solution() {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([]);
 
-
   useEffect(() => {
     getSolution()
-  }, [session])
+  }, [])
 
   async function getSolution() {
     const solutionId = 54;
     try {
       setLoading(true)
-
       let { data, error, status } = await supabase
         .from('solution')
         .select(`*`)
@@ -24,9 +23,7 @@ export default function Solution({ session }) {
       if (error && status !== 406) {
         throw error
       }
-
       if (data) {
-        // console.log(data, "data");
         setData(data);
       }
     } catch (error) {
@@ -39,18 +36,20 @@ export default function Solution({ session }) {
 
 
   return (
-    
+
     <div className="form-widget">
-
-      <br />
-      Name: {data.name}
-      <br />
-      Desc :   {data.description}
-      <br />
-
-
-      <br />
+      {loading && <Loading />}
+      {!loading &&
+        <>
+          <br />
+          Name: {data.name}
+          <br />
+          {data.description ? "Desc :" + data.description : ""}
+          <br />
+          <br />
+        </>}
     </div>
-    
+
+
   )
 }

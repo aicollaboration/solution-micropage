@@ -1,25 +1,18 @@
 
 import { useState, useEffect } from 'react'
-import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-
-import OpenApi from './components/OpenApi/OpenApi';
-import SolutionBox from './components/SolutionBox/SolutionBox';
-import { supabase } from './supabaseClient'
-
-
+import { Link } from 'react-router-dom'
+import SolutionBox from '../../components/SolutionBox/SolutionBox';
+import { supabase } from '../../supabaseClient';
 
 export default function Solutions({ session }) {
     const [loading, setLoading] = useState(true)
     const [apiData, setApiData] = useState([]);
-    const [selectedData, setSelectedData] = useState({});
 
 
     useEffect(() => {
         getSolutionServices()
-    }, [session])
+    }, [])
 
 
     if (loading) {
@@ -46,7 +39,6 @@ export default function Solutions({ session }) {
             }
 
             if (data) {
-                // console.log(data, "data");
                 setApiData(data);
             }
 
@@ -57,19 +49,22 @@ export default function Solutions({ session }) {
         }
     }
 
-    const handleClick = (_item) => {
-        setSelectedData(_item)
-    }
 
     return (
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                {apiData && apiData.map((item, index) => (
-                        <Grid item xs={6} key={index} onClick={e => handleClick(item.service ? JSON.parse(item.service.api) : {})}>
-                                <SolutionBox item={item} />
-                        </Grid>
-                ))}
-            <OpenApi session={session} selectedData={selectedData} />
-            </Grid>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            {apiData && apiData.map((item, index) => (
+                <Grid item xs={6} key={index} >
+                    <Link
+                        to={{
+                            pathname: `/SolutionDetail/${item.id}`,
+                            state: { Solution: item.service ? JSON.parse(item.service.api) : {} }
+                        }}
+                    >
+                        <SolutionBox item={item} />
+                    </Link>
+                </Grid>
+            ))}
+        </Grid>
     )
 }
 

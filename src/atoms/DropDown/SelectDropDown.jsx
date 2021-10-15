@@ -60,7 +60,7 @@ const _default = defaultValue||label;
           // multiple
           // value={personName}
           // onChange={handleChange}
-          input={<OutlinedInput label="Name" /> }
+          // input={<OutlinedInput label="Name" /> }
           MenuProps={MenuProps}
         >
            {data.map((item, index) => (
