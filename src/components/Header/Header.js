@@ -4,16 +4,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
 
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-import { supabase } from '../../supabaseClient'
-import { Link } from 'react-router-dom'
-import Badge from '@mui/material/Badge';
+import { supabase } from '../../supabaseClient';
+import { Link } from 'react-router-dom';
 
 
 export default function Header() {
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -30,23 +28,29 @@ export default function Header() {
 
 
 
+          <MenuItem>
+            <Link to="/home">
+              Home
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="Solutions"
+            >Solutions
+            </Link>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Link to="/home">
-                Home
-              </Link>
+          </MenuItem>
+          <MenuItem>
+            <Button color="inherit"
+              onClick={() => supabase.auth.signOut()}>
+              Log out
+            </Button>
 
-              <Link to="Solutions"
-              >Solutions
-              </Link>
-
-          </Box>
+          </MenuItem>
 
 
-          <Button color="inherit"
-            onClick={() => supabase.auth.signOut()}>
-            Log out
-          </Button>
+
+
+
 
         </Toolbar>
       </AppBar>

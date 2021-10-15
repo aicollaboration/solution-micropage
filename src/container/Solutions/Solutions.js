@@ -51,7 +51,11 @@ export default function Solutions({ session }) {
 
 
     return (
+        <>
+         <br/>
+            <br/>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+           
             {apiData && apiData.map((item, index) => (
                 <Grid item xs={6} key={index} >
                     <Link
@@ -65,6 +69,7 @@ export default function Solutions({ session }) {
                 </Grid>
             ))}
         </Grid>
+        </>
     )
 }
 

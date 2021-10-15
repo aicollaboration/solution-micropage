@@ -28,9 +28,19 @@ text-align: center;
   height: 45px;
   color: #fff;
   font-weight: 600;
-  background: #4068fb;
+  background: green;
   border: 0px;
 }
+a{
+  text-decoration: none;
+  cursor: pointer;
+}
+header {
+color:#fff;
+}
+header a, header a button{
+  color:#fff !important;
+  }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

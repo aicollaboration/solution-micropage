@@ -15,6 +15,9 @@ import { ProtectedRoute } from './util/ProtectedRoute';
 import { setLocalStorage } from "./util/storage";
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
+import { unstable_createMuiStrictModeTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { green, orange } from '@mui/material/colors';
 
 import './App.css'
 
@@ -22,7 +25,24 @@ import './App.css'
 export default function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(false);
+  const theme = unstable_createMuiStrictModeTheme();
 
+
+const outerTheme = createTheme({
+  palette: {
+    primary: {
+      main: orange[500],
+    },
+  },
+});
+
+const innerTheme = createTheme({
+  palette: {
+    primary: {
+      main: green[500],
+    },
+  },
+});
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -34,6 +54,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <ThemeProvider theme={innerTheme}>
 
       {session === null && <Auth setSession={setSession} setLoading={setLoading}/>}
       {session !== null &&
@@ -62,6 +83,8 @@ export default function App() {
           </Container>
         </BrowserRouter>
       }
+
+</ThemeProvider>
 
     </div>
   )
