@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <solution-repo>
+  labels:
+    app: <solution-repo>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <solution-repo>
+  template:
+    metadata:
+      labels:
+        app: <solution-repo>
+    spec:
+      containers:
+        - name: <solution-repo>
+          image: aicollaboration/<solution-repo>:<VERSION>
+          imagePullPolicy: Always
+          env:
+          - name: PYTHONUNBUFFERED
+            value: "0"
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "2048Mi"
+              cpu: "500m"
+      restartPolicy: Always
+
+
+
+     
