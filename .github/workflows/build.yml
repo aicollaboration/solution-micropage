@@ -23,6 +23,12 @@ jobs:
           sed -i "s/<solution-repo>/${GITHUB_REPOSITORY#*/}/g" devops/kubernetes/deployment-solution.yml
           sed -i "s/<solution-repo>/${GITHUB_REPOSITORY#*/}/g" devops/kubernetes/service-solution.yml
           sed -i "s/<VERSION>/${{ github.sha }}/g" devops/kubernetes/deployment-solution.yml
+      
+      - name: Debug files
+        run: |
+          cat devops/kubernetes/api-ingress-solution.yml
+          cat devops/kubernetes/deployment-solution.yml
+          cat devops/kubernetes/service-solution.yml
          
       - name: Set kubernetes secrets
         uses: azure/k8s-set-context@v2
