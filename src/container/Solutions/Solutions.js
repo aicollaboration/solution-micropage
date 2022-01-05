@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from 'react'
 import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import SolutionBox from '../../components/SolutionBox/SolutionBox';
 import { supabase } from '../../supabaseClient';
 
@@ -11,6 +10,7 @@ export default function Solutions({ session }) {
 
 
     useEffect(() => {
+        getSolutions()
         getSolutionServices()
     }, [])
 
@@ -19,20 +19,39 @@ export default function Solutions({ session }) {
         return <div>Loading...</div>;
     }
 
+    async function getSolutions() {
+        try {
+            setLoading(true)
+            let { data, error, status } = await supabase
+                .from('solution')
+                .select(`*`)
+                .eq('id', 81)
+
+            if (error && status !== 406) {
+                throw error
+            }
+            if (data) {
+                setApiData(data);
+            }
+        } catch (error) {
+            alert(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     async function getSolutionServices() {
-        const solutionId = 57;
+        const solutionId = process.env.REACT_APP_SOLUTION_ID;
         try {
             setLoading(true)
 
             const query = `
-        id,
-        config,
-        solution(*),
-        service(*)
-        `;
-
+                id,
+                config,
+                solution(*),
+                service(*)
+            `
             const { data, error, status } = await supabase.from('solution_services').select(query).eq('solutionId', solutionId);
-
 
             if (error && status !== 406) {
                 throw error
@@ -51,16 +70,12 @@ export default function Solutions({ session }) {
 
 
     return (
-        <>
-         <br/>
-            <br/>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-           
             {apiData && apiData.map((item, index) => (
                 <Grid item xs={6} key={index} >
                     <Link
                         to={{
-                            pathname: `/SolutionDetail/${item.id}`,
+                            pathname: `/solutions/${item.id}`,
                             state: { Solution: item.service ? JSON.parse(item.service.api) : {} }
                         }}
                     >
@@ -69,7 +84,6 @@ export default function Solutions({ session }) {
                 </Grid>
             ))}
         </Grid>
-        </>
     )
 }
 

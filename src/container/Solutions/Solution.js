@@ -11,7 +11,7 @@ export default function Solution() {
   }, [])
 
   async function getSolution() {
-    const solutionId = 54;
+    const solutionId = process.env.REACT_APP_SOLUTION_ID;
     try {
       setLoading(true)
       let { data, error, status } = await supabase
@@ -19,6 +19,7 @@ export default function Solution() {
         .select(`*`)
         .eq('id', solutionId)
         .single()
+
 
       if (error && status !== 406) {
         throw error
@@ -33,10 +34,7 @@ export default function Solution() {
     }
   }
 
-
-
   return (
-
     <div className="form-widget">
       {loading && <Loading />}
       {!loading &&
@@ -49,7 +47,5 @@ export default function Solution() {
           <br />
         </>}
     </div>
-
-
   )
 }
